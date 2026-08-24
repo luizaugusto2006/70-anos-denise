@@ -15,11 +15,11 @@ const overlay = document.getElementById('startOverlay');
 
 const musicas = [musica1, musica2, musica3];
 
-// Seções temáticas organizadas por etapas da vida
+// Se\u00e7&#245;es tem\u00e1ticas organizadas por etapas da vida
 const secoes = [
     {
-        titulo: "Infância",
-        subtitulo: "O começo de tudo",
+        titulo: "Inf\u00e2ncia",
+        subtitulo: "O come\u00e7o de tudo",
         pasta: "fotos/Infancia_1",
         fotoInicial: "foto_Infancia_Inicial.jpg",
         fotos: [
@@ -32,7 +32,7 @@ const secoes = [
         ]
     },
     {
-        titulo: "O Início",
+        titulo: "O In\u00edcio",
         subtitulo: "Formando o lar",
         pasta: "fotos/O_inicio_2",
         fotoInicial: "foto_Inicio_Inicial.jpg",
@@ -45,8 +45,8 @@ const secoes = [
         ]
     },
     {
-        titulo: "Irmãos",
-        subtitulo: "Laços de sangue",
+        titulo: "Irm\u00e3os",
+        subtitulo: "La\u00e7os de sangue",
         pasta: "fotos/Irmaos_3",
         fotoInicial: "foto_Irmaos_Inicial.jpg",
         fotos: [
@@ -65,7 +65,7 @@ const secoes = [
     },
     {
         titulo: "Saudades",
-        subtitulo: "Pessoas Inesquecíveis",
+        subtitulo: "Pessoas Inesquec\u00edveis",
         pasta: "fotos/Saudades_4",
         fotoInicial: "foto_Saudade_Inicial.jpg",
         fotos: [
@@ -106,7 +106,7 @@ const secoes = [
     },
     {
         titulo: "Meus Filhos",
-        subtitulo: "Nossa maior bênção",
+        subtitulo: "Nossa maior b\u00ean\u00e7\u00e3o",
         pasta: "fotos/Filhos",
         fotoInicial: "foto_Filhos_Inicial.jpg",
         fotos: [
@@ -208,7 +208,7 @@ const secoes = [
     },
     {
         titulo: "Amigos",
-        subtitulo: "Irmãos escolhidos",
+        subtitulo: "Irm\u00e3os escolhidos",
         pasta: "fotos/Amigos",
         fotoInicial: "foto_Amigos_Inicial.jpg",
         fotos: [
@@ -238,7 +238,7 @@ const secoes = [
         ]
     },
     {
-        titulo: "Família",
+        titulo: "Fam\u00edlia",
         subtitulo: "Tudo que importa",
         pasta: "fotos/Familia",
         fotoInicial: "foto_Familia_Inicial.jpg",
@@ -335,7 +335,7 @@ function createTitleSlide(titulo, subtitulo) {
     const slide = document.createElement('div');
     slide.className = 'slide section-title';
     slide.innerHTML = `
-        <div class="section-icon">✦</div>
+        <div class="section-icon">&#10022;</div>
         <h2 class="section-titulo">${titulo}</h2>
         <p class="section-subtitulo">${subtitulo}</p>
     `;
@@ -408,8 +408,8 @@ function createEndSlide() {
         <div class="end-content">
             <div class="numero-setenta">70</div>
             <h1 style="font-size: 4vw;">Com todo o nosso amor</h1>
-            <p class="subtitulo" style="margin-top: 30px;">Felizes 70 anos, Mãe!</p>
-            <div class="heart-animation">❤</div>
+            <p class="subtitulo" style="margin-top: 30px;">Felizes 70 anos, M\u00e3e!</p>
+            <div class="heart-animation">&#10084;</div>
         </div>
     `;
     return slide;

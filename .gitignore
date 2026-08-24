@@ -1,0 +1,36 @@
+# Arquivos de sistema
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Arquivos Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# Arquivos de anÃ¡lise (nÃ£o necessÃ¡rios no deploy)
+analise_fotos.py
+separar_sozinha.py
+relatorio_temas.txt
+resultado_sozinha.txt
+temas_fotos.json
+
+# Pastas de mÃ­dia (upload manual no PythonAnywhere)
+fotos/
+musica/
+
+# VÃ­deo final (arquivo grande)
+video_final.mp4
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/

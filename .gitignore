@@ -19,6 +19,10 @@ relatorio_temas.txt
 resultado_sozinha.txt
 temas_fotos.json
 
+# Pastas de mídia (upload manual no PythonAnywhere)
+fotos/
+musica/
+
 # Vídeo final (arquivo grande)
 video_final.mp4
 

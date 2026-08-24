@@ -227,7 +227,7 @@ h1 {
     opacity: 1;
 }
 
-/* TransiÃ§Ã£o suave entre slides */
+/* Transi\u00e7\u00e3o suave entre slides */
 .slide {
     animation: fadeIn 1.5s ease-in-out;
 }
@@ -253,7 +253,7 @@ h1 {
     pointer-events: none;
 }
 
-/* AnimaÃ§Ã£o para o tÃ­tulo */
+/* Anima\u00e7\u00e3o para o t\u00edtulo */
 .numero-setenta {
     animation: pulse 2s ease-in-out infinite, glow 3s ease-in-out infinite;
 }

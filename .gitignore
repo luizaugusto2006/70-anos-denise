@@ -1,0 +1,32 @@
+# Arquivos de sistema
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Arquivos Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# Arquivos de análise (não necessários no deploy)
+analise_fotos.py
+separar_sozinha.py
+relatorio_temas.txt
+resultado_sozinha.txt
+temas_fotos.json
+
+# Vídeo final (arquivo grande)
+video_final.mp4
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/

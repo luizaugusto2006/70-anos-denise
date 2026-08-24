@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>70 Anos de Vida e Amor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="startOverlay" class="start-overlay">
+        <div class="start-content">
+            <div class="numero-setenta">70</div>
+            <h1>Anos de Vida e Amor</h1>
+            <p class="subtitulo">Uma homenagem carinhosa</p>
+            <button id="startBtn" class="start-btn">Iniciar ApresentaÃ§Ã£o</button>
+        </div>
+    </div>
+
+    <div class="slideshow-container">
+        <div class="slide fade">
+            <div class="numero-setenta">70</div>
+            <h1>Anos de Vida e Amor</h1>
+            <p class="subtitulo">Uma homenagem carinhosa</p>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-link">â† Voltar</a>
+
+    <div class="controls">
+        <button class="control-btn" id="prevBtn">&#10094;</button>
+        <button class="control-btn" id="playPauseBtn">&#10074;&#10074;</button>
+        <button class="control-btn" id="nextBtn">&#10095;</button>
+        <button class="control-btn restart-btn" id="restartBtn">&#8634;</button>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="slide-counter" id="slideCounter">1 / 1</div>
+
+    <audio id="musica1" preload="auto">
+        <source src="musica/01. Imagine.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="musica2" preload="auto">
+        <source src="musica/02 Bee Gees - How Deep Is Your Love.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="musica3" preload="auto">
+        <source src="musica/01  Whitney Houston - Greatest Love of All.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="aplausos" preload="auto">
+        <source src="musica/aplausos.mp4" type="audio/mp4">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

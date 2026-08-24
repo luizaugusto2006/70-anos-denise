@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotos do AniversÃ¡rio - 70 Anos de Denise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            min-height: 100vh;
+            background: #0a0a0a;
+            color: #fff;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, #1a1a2e 0%, #0a0a0a 100%);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-family: 'Georgia', serif;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            color: #fff;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 3vw;
+            font-weight: normal;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #f5af19, #f12711);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitulo {
+            font-size: 1.5vw;
+            font-style: italic;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .contador {
+            font-size: 1vw;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            padding: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .foto-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: #1a1a1a;
+        }
+
+        .foto-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 40px rgba(245, 175, 25, 0.3);
+        }
+
+        .foto-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .foto-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 5px;
+            animation: zoomIn 0.3s ease-out;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .lightbox-close:hover {
+            color: #f5af19;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            padding: 20px;
+            transition: color 0.3s;
+        }
+
+        .lightbox-nav:hover {
+            color: #f5af19;
+        }
+
+        .lightbox-prev {
+            left: 10px;
+        }
+
+        .lightbox-next {
+            right: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 30px 15px; }
+            h1 { font-size: clamp(20px, 6vw, 36px); }
+            .subtitulo { font-size: clamp(12px, 3vw, 18px); }
+            .contador { font-size: 12px; }
+            .back-btn { padding: 8px 16px; font-size: 14px; top: 15px; left: 15px; }
+            .galeria { 
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+                padding: 15px;
+            }
+            .foto-item { border-radius: 6px; }
+            .lightbox-nav { font-size: 36px; padding: 15px; }
+            .lightbox-close { font-size: 32px; top: 15px; right: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 25px 10px; }
+            h1 { font-size: clamp(18px, 7vw, 28px); }
+            .subtitulo { font-size: 12px; }
+            .galeria { 
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+                padding: 10px;
+            }
+            .lightbox-nav { font-size: 28px; padding: 10px; }
+            .lightbox-prev { left: 5px; }
+            .lightbox-next { right: 5px; }
+            .footer { padding: 30px 15px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">â† Voltar</a>
+
+    <header>
+        <h1>Fotos do AniversÃ¡rio</h1>
+        <p class="subtitulo">Momentos da festa de 70 anos da Denise</p>
+        <p class="contador">13 de agosto. de 2026</p>
+    </header>
+
+    <div class="galeria" id="galeria"></div>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">Ã—</span>
+        <span class="lightbox-nav lightbox-prev" id="lightboxPrev">â€¹</span>
+        <img src="" alt="" id="lightboxImg">
+        <span class="lightbox-nav lightbox-next" id="lightboxNext">â€º</span>
+    </div>
+
+    <footer class="footer">
+        <p>Feito com amor para a nossa querida Denise â¤</p>
+    </footer>
+
+    <script>
+        const fotos = [
+            "064e8239-6f2e-4e0e-9b8b-4f7062386331.jpg",
+            "06a73af8-2c80-46f2-9942-8b0c1a542347.jpg",
+            "183b8ddd-e446-45f7-ad67-4afd0adc8c19.jpg",
+            "3361b7c9-4103-4687-a23d-b1b37f14bbdd.jpg",
+            "3db2152d-2873-4c39-9e2a-af410d62568d.jpg",
+            "3f8ff95c-8f93-4974-a414-9fe1a79e9912.jpg",
+            "47d82cee-744a-48b0-becb-016ac57bdf62.jpg",
+            "4de1fb2c-fcc8-4f7e-9906-cb0ef627f23b.jpg",
+            "4e71ac0f-d611-4693-a638-3135c908cee3.jpg",
+            "5be94f06-099d-4ff1-856a-0edcc2d852f0.jpg",
+            "5edcaf0d-4d9a-4dbb-8aab-aa0d008db1bd.jpg",
+            "68ee994e-0573-4100-9519-eeeb7b2466e0.jpg",
+            "6dca6624-8641-4741-aae3-b0e9b9172139.jpg",
+            "6e68960e-10d4-4767-b183-9450193c8a61.jpg",
+            "6f264323-db90-4dcf-8506-08ec2d3787e0.jpg",
+            "7171814e-87c1-4a75-8738-4ab8c12316f7.jpg",
+            "77c687f7-939f-40f2-8bef-7c10328b6bb1.jpg",
+            "8a717d26-0223-4113-b804-33a6a52c937d.jpg",
+            "8e29bbe9-1344-4a33-b52a-85bdc3227e5b.jpg",
+            "97f7c9cb-1930-4f2e-b3e7-4f21c67d76a7.jpg",
+            "9b9d7537-7df3-47cf-abe6-3bc741a0d953.jpg",
+            "9f5ea449-578e-4a14-8103-3c41440f008a.jpg",
+            "a0926022-70ee-40cd-aa07-26aab408975c.jpg",
+            "a498450d-eac6-42e9-86d2-763b62254952.jpg",
+            "a9899208-656a-4ed8-976b-79e9b2755aa5.jpg",
+            "ab5c436e-42ae-40b2-b254-0f51c9a9c907.jpg",
+            "ac453e81-39bd-44c0-88cc-4bff0bfd5f0a.jpg",
+            "bc5e134a-1198-4e1b-a564-39439ff7e076.jpg",
+            "bce7f203-cf21-4c9a-ab97-c224c90818bf.jpg",
+            "c144be6c-7854-4cd7-a027-36789b9901ba.jpg",
+            "d3abf4de-1c3c-4543-929f-fafd7f338af2.jpg",
+            "d43a1468-c47a-4a2c-9c5e-d736f6b9d915.jpg",
+            "e26f18be-b890-474f-8c25-34011c1ec537.jpg",
+            "e38bbca8-d428-439b-8ffd-210eeb7defb4.jpg",
+            "e76267a9-7a0b-471a-97d6-740a1a7261e3.jpg",
+            "f0ffb516-90d6-4769-bea9-a78eb9692c07.jpg",
+            "IMG_9489.jpg",
+            "IMG_9490.JPG",
+            "IMG_9491.jpg",
+            "IMG_9492.jpg",
+            "IMG_9493.jpg",
+            "IMG_9494.jpg",
+            "IMG_9495.jpg",
+            "IMG_9496.JPG",
+            "IMG_9497.jpg",
+            "IMG_9498.jpg",
+            "IMG_9499.JPG",
+            "IMG_9500.jpg",
+            "IMG_9501.jpg",
+            "IMG_9502.JPG",
+            "IMG_9503.jpg",
+            "IMG_9504.jpg",
+            "IMG_9505.JPG",
+            "IMG_9506.jpg",
+            "IMG_9507.jpg",
+            "IMG_9508.JPG",
+            "IMG_9509.JPG",
+            "IMG_9510.jpg",
+            "IMG_9511.JPG",
+            "IMG_9512.JPG",
+            "IMG_9513.jpg",
+            "IMG_9514.JPG",
+            "IMG_9515.JPG",
+            "IMG_9516.jpg",
+            "IMG_9517.jpg",
+            "IMG_9518.jpg",
+            "IMG_9519.jpg",
+            "IMG_9520.JPG",
+            "IMG_9521.jpg",
+            "IMG_9522.jpg",
+            "IMG_9523.jpg",
+            "IMG_9524.jpg",
+            "IMG_9525.jpg",
+            "IMG_9526.jpg",
+            "IMG_9527.jpg",
+            "IMG_9528.jpg",
+            "IMG_9529.jpg",
+            "IMG_9530.jpg",
+            "IMG_9531.jpg",
+            "IMG_9532.JPG",
+            "IMG_9533.JPG",
+            "IMG_9534.jpg",
+            "IMG_9537.jpg",
+            "IMG_9538.jpg",
+            "IMG_9539.JPG",
+            "IMG_9540.JPG",
+            "IMG_9541.jpg",
+            "IMG_9542.JPG",
+            "IMG_9543.JPG",
+            "IMG_9544.jpg",
+            "IMG_9545.JPG",
+            "IMG_9546.jpg",
+            "IMG_9548.jpg",
+            "IMG_9549.jpg",
+            "IMG_9551.JPG",
+            "IMG_9552.JPG",
+            "IMG_9553.JPG",
+            "IMG_9554.JPG",
+            "IMG_9555.JPG",
+            "IMG_9556.JPG",
+            "IMG_9557.JPG",
+            "IMG_9558.JPG",
+            "IMG_9559.JPG",
+            "IMG_9560.JPG",
+            "IMG_9561.JPG",
+            "IMG_9562.JPG",
+            "IMG_9563.JPG",
+            "IMG_9564.JPG",
+            "IMG_9565.JPG",
+            "IMG_9566.JPG",
+            "IMG_9567.JPG",
+            "IMG_9568.JPG",
+            "IMG_9569.JPG",
+            "IMG_9570.JPG",
+            "IMG_9571.JPG",
+            "IMG_9572.JPG",
+            "IMG_9573.JPG",
+            "IMG_9574.JPG",
+            "IMG_9575.JPG",
+            "IMG_9576.JPG",
+            "IMG_9577.jpg",
+            "IMG_9578.JPG",
+            "IMG_9579.JPG",
+            "IMG_9580.JPG",
+            "IMG_9581.JPG",
+            "IMG_9582.JPG",
+            "IMG_9583.JPG",
+            "IMG_9584.JPG",
+            "IMG_9585.JPG",
+            "IMG_9586.JPG",
+            "IMG_9587.JPG",
+            "IMG_9588.JPG",
+            "IMG_9589.JPG",
+            "IMG_9590.JPG",
+            "IMG_9591.JPG",
+            "IMG_9592.JPG",
+            "IMG_9593.JPG",
+            "IMG_9594.JPG",
+            "IMG_9595.JPG",
+            "IMG_9596.jpg",
+            "IMG_9597.jpg",
+            "IMG_9598.jpg",
+            "IMG_9599.JPG",
+            "IMG_9600.JPG",
+            "IMG_9601.JPG",
+            "IMG_9615.jpg",
+            "IMG_9620.jpg",
+            "IMG_9621.jpg",
+            "IMG_9622.jpg",
+            "IMG_9623.jpg",
+            "IMG_9624.jpg",
+            "IMG_9625.jpg",
+            "IMG_9626.jpg",
+            "IMG_9627.jpg",
+            "IMG_9628.jpg",
+            "IMG_9629.jpg",
+            "IMG_9630.jpg",
+            "IMG_9631.jpg",
+            "IMG_9632.jpg",
+            "IMG_9633.jpg",
+            "IMG_9634.JPG",
+            "IMG_9635.JPG",
+            "IMG_9636.jpg",
+            "IMG_9637.jpg",
+            "IMG_9638.jpg",
+            "IMG_9639.jpg",
+            "IMG_9640.JPG",
+            "IMG_9641.JPG",
+            "IMG_9642.JPG",
+            "IMG_9643.JPG",
+            "IMG_9644.JPG",
+            "IMG_9645.JPG",
+            "IMG_9646.JPG",
+            "IMG_9647.JPG",
+            "IMG_9648.JPG",
+            "IMG_9649.JPG",
+            "IMG_9650.JPG",
+            "IMG_9651.JPG",
+            "IMG_9652.JPG",
+            "IMG_9653.jpg",
+            "IMG_9654.jpg",
+            "IMG_9655.jpg",
+            "IMG_9656.jpg",
+            "IMG_9657.JPG",
+            "IMG_9658.jpg",
+            "IMG_9659.jpg",
+            "IMG_9662.JPG",
+            "IMG_9663.jpg",
+            "IMG_9664.jpg",
+            "IMG_9665.jpg",
+            "IMG_9666.jpg",
+            "IMG_9667.jpg",
+            "IMG_9668.jpg",
+            "IMG_9669.jpg",
+            "IMG_9670.jpg",
+            "IMG_9671.JPG",
+            "IMG_9673.jpg",
+            "IMG_9674.jpg",
+            "IMG_9675.jpg",
+            "IMG_9676.jpg",
+            "IMG_9677.jpg",
+            "IMG_9678.jpg",
+            "IMG_9679.JPG",
+            "IMG_9680.JPG",
+            "IMG_9681.JPG",
+            "IMG_9682.JPG",
+            "IMG_9683.JPG",
+            "IMG_9684.jpg",
+            "IMG_9686.JPG",
+            "IMG_9687.JPG",
+            "IMG_9688.JPG",
+            "IMG_9689.JPG",
+            "IMG_9690.jpg",
+            "WhatsApp Image 2026-08-23 at 11.37.46 (1).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.46 (2).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.46 (3).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.46.jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.47 (1).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.47 (2).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.47 (3).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.47 (4).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.47 (5).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.47 (6).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.47.jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.48 (1).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.48 (2).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.48 (3).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.48.jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (1).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (10).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (11).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (12).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (13).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (14).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (15).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (16).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (17).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (18).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (19).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (2).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (20).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (3).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (4).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (5).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (6).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (7).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (8).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49 (9).jpeg",
+            "WhatsApp Image 2026-08-23 at 11.37.49.jpeg"
+        ];
+
+        const pasta = "fotos/PÃ³s aniversario/";
+        let indiceAtual = 0;
+
+        function criarGaleria() {
+            const galeria = document.getElementById('galeria');
+            document.querySelector('.contador').textContent = `${fotos.length} fotos da festa`;
+            
+            fotos.forEach((foto, index) => {
+                const item = document.createElement('div');
+                item.className = 'foto-item';
+                item.innerHTML = `<img src="${pasta + foto}" alt="Foto ${index + 1}" loading="lazy">`;
+                item.addEventListener('click', () => abrirLightbox(index));
+                galeria.appendChild(item);
+            });
+        }
+
+        function abrirLightbox(index) {
+            indiceAtual = index;
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            img.src = pasta + fotos[indiceAtual];
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function navegar(direcao) {
+            indiceAtual += direcao;
+            if (indiceAtual < 0) indiceAtual = fotos.length - 1;
+            if (indiceAtual >= fotos.length) indiceAtual = 0;
+            document.getElementById('lightboxImg').src = pasta + fotos[indiceAtual];
+        }
+
+        document.getElementById('lightboxClose').addEventListener('click', fecharLightbox);
+        document.getElementById('lightboxPrev').addEventListener('click', () => navegar(-1));
+        document.getElementById('lightboxNext').addEventListener('click', () => navegar(1));
+
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('lightbox')) {
+                fecharLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            if (e.key === 'Escape') fecharLightbox();
+            if (e.key === 'ArrowLeft') navegar(-1);
+            if (e.key === 'ArrowRight') navegar(1);
+        });
+
+        criarGaleria();
+    </script>
+</body>
+</html>

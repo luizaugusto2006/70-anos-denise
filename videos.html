@@ -262,28 +262,11 @@
             }
         });
 
-        fetch(pasta)
-            .then(r => r.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const links = doc.querySelectorAll('a');
-                links.forEach(link => {
-                    const href = link.getAttribute('href');
-                    if (href) {
-                        const ext = href.split('.').pop().toLowerCase();
-                        if (videoExts.includes(ext)) {
-                            videoList.push(href);
-                        }
-                    }
-                });
-                videoList.sort();
-                criarGrid();
-            })
-            .catch(() => {
-                emptyMsg.style.display = 'block';
-                contador.textContent = '0 v&iacute;deos';
-            });
+        videoList = [
+            "WhatsApp_Video_2026_08_23_at_23.53.12.mp4",
+            "WhatsApp_Video_2026_08_23_at_23.55.01.mp4"
+        ];
+        criarGrid();
     </script>
 </body>
 </html>

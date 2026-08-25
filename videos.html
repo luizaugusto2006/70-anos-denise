@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V&iacute;deos do Anivers&aacute;rio - 70 Anos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 16px;
+            z-index: 100;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        header h1 {
+            font-size: clamp(24px, 5vw, 42px);
+            background: linear-gradient(135deg, #f5af19, #f12711);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitulo {
+            font-size: 16px;
+            color: #999;
+            font-style: italic;
+        }
+
+        .contador {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 20px 40px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .video-item {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .video-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(245,175,25,0.3);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .video-item video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-item .video-info {
+            padding: 15px;
+        }
+
+        .video-item .video-name {
+            font-size: 14px;
+            color: #ccc;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox video {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            z-index: 1001;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+        }
+
+        .lightbox-close:hover {
+            color: #f5af19;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: rgba(255,255,255,0.3);
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .empty-msg {
+            text-align: center;
+            padding: 80px 20px;
+            color: #666;
+            font-size: 18px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .videos-grid {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            header { padding: 70px 15px 30px; }
+            .back-btn { top: 10px; left: 10px; padding: 10px 18px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">&larr; Voltar</a>
+
+    <header>
+        <h1>V&iacute;deos do Anivers&aacute;rio</h1>
+        <p class="subtitulo">Momentos em v&iacute;deo da festa de 70 anos da Denise</p>
+        <p class="contador" id="contador">Carregando...</p>
+    </header>
+
+    <div class="videos-grid" id="videosGrid"></div>
+
+    <div class="empty-msg" id="emptyMsg" style="display:none;">
+        Nenhum v&iacute;deo encontrado. Adicione v&iacute;deos na pasta videos/.
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <video id="lightboxVideo" controls></video>
+    </div>
+
+    <footer class="footer">Feito com amor para a nossa querida Denise &#10084;</footer>
+
+    <script>
+        const videoExts = ['mp4', 'webm', 'ogg', 'mov'];
+        const pasta = 'videos/';
+        const videosGrid = document.getElementById('videosGrid');
+        const contador = document.getElementById('contador');
+        const emptyMsg = document.getElementById('emptyMsg');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxVideo = document.getElementById('lightboxVideo');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        let videoList = [];
+
+        function nomeAmigavel(nome) {
+            return nome
+                .replace(/\.[^.]+$/, '')
+                .replace(/_/g, ' ')
+                .replace(/-/g, ' ')
+                .replace(/\b\w/g, c => c.toUpperCase());
+        }
+
+        function criarGrid() {
+            videoList.forEach((video, index) => {
+                const item = document.createElement('div');
+                item.className = 'video-item';
+                item.innerHTML = `
+                    <video src="${pasta + video}" preload="metadata" muted></video>
+                    <div class="video-info">
+                        <div class="video-name">${nomeAmigavel(video)}</div>
+                    </div>
+                `;
+                item.addEventListener('click', () => abrirLightbox(index));
+                videosGrid.appendChild(item);
+            });
+
+            contador.textContent = videoList.length + ' v&iacute;deos';
+
+            if (videoList.length === 0) {
+                emptyMsg.style.display = 'block';
+            }
+        }
+
+        function abrirLightbox(index) {
+            lightboxVideo.src = pasta + videoList[index];
+            lightbox.classList.add('active');
+            lightboxVideo.play();
+        }
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            lightboxVideo.pause();
+            lightboxVideo.src = '';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+                lightboxVideo.pause();
+                lightboxVideo.src = '';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+                lightboxVideo.pause();
+                lightboxVideo.src = '';
+            }
+        });
+
+        fetch(pasta)
+            .then(r => r.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const links = doc.querySelectorAll('a');
+                links.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href) {
+                        const ext = href.split('.').pop().toLowerCase();
+                        if (videoExts.includes(ext)) {
+                            videoList.push(href);
+                        }
+                    }
+                });
+                videoList.sort();
+                criarGrid();
+            })
+            .catch(() => {
+                emptyMsg.style.display = 'block';
+                contador.textContent = '0 v&iacute;deos';
+            });
+    </script>
+</body>
+</html>

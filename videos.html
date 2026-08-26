@@ -12,6 +12,10 @@
             background: #0a0a0a;
             color: #fff;
             min-height: 100vh;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .back-btn {
@@ -114,6 +118,14 @@
             max-width: 90%;
             max-height: 80vh;
             border-radius: 8px;
+        }
+
+        .lightbox video::-webkit-media-controls-download-button {
+            display: none !important;
+        }
+
+        .lightbox video::-webkit-media-controls-enclosure {
+            overflow: hidden;
         }
 
         .lightbox-close {
@@ -258,6 +270,14 @@
             "WhatsApp_Video_2026_08_23_at_23.55.01.mp4"
         ];
         criarGrid();
+
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        document.addEventListener('selectstart', (e) => e.preventDefault());
+        document.addEventListener('dragstart', (e) => e.preventDefault());
+
+        document.querySelectorAll('video').forEach(v => {
+            v.addEventListener('contextmenu', (e) => e.preventDefault());
+        });
     </script>
 </body>
 </html>

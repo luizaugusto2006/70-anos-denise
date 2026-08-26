@@ -92,18 +92,6 @@
             display: block;
         }
 
-        .video-item .video-info {
-            padding: 15px;
-        }
-
-        .video-item .video-name {
-            font-size: 14px;
-            color: #ccc;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
         .lightbox {
             display: none;
             position: fixed;
@@ -219,9 +207,6 @@
                 item.className = 'video-item';
                 item.innerHTML = `
                     <video src="${pasta + video}" preload="metadata" muted></video>
-                    <div class="video-info">
-                        <div class="video-name">${nomeAmigavel(video)}</div>
-                    </div>
                 `;
                 item.addEventListener('click', () => abrirLightbox(index));
                 videosGrid.appendChild(item);
